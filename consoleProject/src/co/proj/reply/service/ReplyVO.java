@@ -1,6 +1,7 @@
 package co.proj.reply.service;
 
 public class ReplyVO {
+	private int replyId;
 	private int replyNo;
 	private String replyContent;
 	private String replyWriter;
@@ -16,12 +17,25 @@ public class ReplyVO {
 
 
 
-	public ReplyVO(int replyNo, String replyContent, String replyWriter, String replyDate, int boardNo) {
+	public ReplyVO(int replyId, int replyNo, String replyContent, String replyWriter, String replyDate, int boardNo) {
+		this.replyId = replyId;
 		this.replyNo = replyNo;
 		this.replyContent = replyContent;
 		this.replyWriter = replyWriter;
 		this.replyDate = replyDate;
 		this.boardNo = boardNo;
+	}
+
+	
+
+	public int getReplyId() {
+		return replyId;
+	}
+
+
+
+	public void setReplyId(int replyId) {
+		this.replyId = replyId;
 	}
 
 
@@ -88,8 +102,8 @@ public class ReplyVO {
 
 	@Override
 	public String toString() {
-		return "ReplyVO [replyNo=" + replyNo + ", replyContent=" + replyContent + ", replyWriter=" + replyWriter
-				+ ", replyDate=" + replyDate + ", boardNo=" + boardNo + "]";
+		return String.format("No.%-3d|    %-20s %155s \n %-200s\n-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------", replyNo, replyWriter, replyDate, replyContent);
+//				"NO." + replyNo + " | "  + "|" + replyWriter + "|" + replyDate + "|" + " \n"  + "|" + replyContent + "|";
 	}
 	
 	

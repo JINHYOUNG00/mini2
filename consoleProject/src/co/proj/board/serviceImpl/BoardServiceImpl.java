@@ -55,6 +55,40 @@ public class BoardServiceImpl implements BoardService{
 	public String showDetail(int boardNo) {
 		conn = dataSource.getConn();
 		String sql = "select * from boards where board_no = ?";
+		String sql2 = "update boards set board_hit = board_hit + 1 where board_no = ?";
+		
+		BoardVO board = new BoardVO();
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, boardNo);
+			
+			PreparedStatement psmt2 = conn.prepareStatement(sql2);
+			psmt2.setInt(1, boardNo);
+			psmt2.executeUpdate();
+			
+			rs =  psmt.executeQuery();
+	
+			
+			if(rs.next()) {
+				board.setBoardNo(rs.getInt("board_no"));
+				board.setBoardTitle(rs.getString("board_title"));
+				board.setBoardContent(rs.getString("board_content"));
+				board.setBoardDate(rs.getString("board_date"));
+				board.setBoardWriter(rs.getString("board_writer"));
+				board.setBoardHit(rs.getInt("board_hit"));
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return board.detailInfo();
+	}
+	
+	@Override
+	public String showDetail2(int boardNo) {
+		conn = dataSource.getConn();
+		String sql = "select * from boards where board_no = ?";
 		
 		BoardVO board = new BoardVO();
 		try {

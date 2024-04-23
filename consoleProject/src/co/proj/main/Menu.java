@@ -79,6 +79,7 @@ public class Menu {
 			switch (choice) {
 			case "1": {
 				replyapp.insertReply(boardNo);
+				
 				break;
 			}
 			case "2": {

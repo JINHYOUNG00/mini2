@@ -63,9 +63,10 @@ public class Board {
 		System.out.print("조회할 글번호 >>");
 		int boardNo = Integer.parseInt(scn.nextLine());
 		Menu.clearScreen();
-		ReplyVO.currentBoardNo = boardNo;
+//		ReplyVO.currentBoardNo = boardNo;
 		System.out.println(boardService.showDetail(boardNo));
 		List<ReplyVO> replyList = replyService.replyList(boardNo);
+		System.out.println("================================================================ 댓 글 ================================================================");
 		for (ReplyVO reply : replyList) {
 			System.out.println(reply.toString());
 		}

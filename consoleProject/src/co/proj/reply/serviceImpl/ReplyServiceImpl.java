@@ -42,6 +42,8 @@ public class ReplyServiceImpl implements ReplyService{
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			close();
 		}
 		
 		return list;
@@ -52,8 +54,8 @@ public class ReplyServiceImpl implements ReplyService{
 	public boolean replyInsert(ReplyVO reply) {
 		int replyNo = 0;
 		conn = dataSource.getConn();
-		String sql = "insert into replies (reply_no , reply_content, reply_writer, board_no)"
-				+ "		values(?,?,?,?)";
+		String sql = "insert into replies (reply_id, reply_no , reply_content, reply_writer, board_no)"
+				+ "		values(reply_id_seq.nextval,?,?,?,?)";
 		String sql2 = "select count(*) as counts from replies where board_no = ?";
 		
 		try {
@@ -68,6 +70,8 @@ public class ReplyServiceImpl implements ReplyService{
 			} else {
 				replyNo = 1;
 			}
+			
+			
 			
 			psmt.setInt(1, replyNo);
 			psmt.setString(2, reply.getReplyContent());

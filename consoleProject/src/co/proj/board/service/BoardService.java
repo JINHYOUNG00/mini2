@@ -9,6 +9,8 @@ public interface BoardService {
 	// 게시판 상세조회
 	public String showDetail(int boardNo);
 	
+	// 댓글 등록시 상세조회 다시 올리기 위해 필요함
+	public String showDetail2(int boardNo);
 	// 게시판 글 등록
 	public boolean boardInsert(BoardVO board);
 	
