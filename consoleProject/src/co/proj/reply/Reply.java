@@ -35,4 +35,20 @@ public class Reply {
 		}
 		
 	}
+	
+	public void updateReply(int BoardNo) {
+		System.out.println("=============== 리 플 수 정 ==================");
+		ReplyVO reply = new ReplyVO();
+		System.out.println("수정할 리플번호 입력");
+		reply.setReplyNo(Integer.parseInt(scn.nextLine()));
+		reply.setBoardNo(BoardNo);
+		
+		if (replyService.whoIsWriter(reply).equals(UserVO.loginUserId)) {
+			replyService.replyUpdate(reply);
+		} else {
+			System.out.println("본인이 작성한 댓글만 수정할 수 있습니다.");
+		}
+	}
+	
+	
 }

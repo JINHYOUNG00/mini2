@@ -52,8 +52,8 @@ public class ReplyServiceImpl implements ReplyService{
 	
 	@Override
 	public boolean replyInsert(ReplyVO reply) {
-		int replyNo = 0;
 		conn = dataSource.getConn();
+		int replyNo = 0;
 		String sql = "insert into replies (reply_id, reply_no , reply_content, reply_writer, board_no)"
 				+ "		values(reply_id_seq.nextval,?,?,?,?)";
 		String sql2 = "select count(*) as counts from replies where board_no = ?";
@@ -94,8 +94,27 @@ public class ReplyServiceImpl implements ReplyService{
 	}
 
 	@Override
-	public boolean replyUpdate() {
-		// TODO Auto-generated method stub
+	public boolean replyUpdate(ReplyVO reply) {
+		conn = dataSource.getConn();
+		String sql = "Update replies set reply_content = ? where board_no = ? and reply_no = ?";
+		
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, reply.getReplyContent());
+			psmt.setInt(2, reply.getBoardNo());
+			psmt.setInt(3, reply.getReplyNo());
+			
+			int r = psmt.executeUpdate();
+			
+			if (r>0) {
+				return true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close();
+		}
 		return false;
 	}
 
@@ -103,6 +122,35 @@ public class ReplyServiceImpl implements ReplyService{
 	public boolean replyDelete() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	
+	@Override
+	public String whoIsWriter(ReplyVO reply) {
+		conn = dataSource.getConn();
+		String sql = "select reply_writer from replies where board_no = ? and reply_no = ?";
+		String writer = "";
+		
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, reply.getReplyContent());
+			psmt.setInt(2, reply.getBoardNo());
+			psmt.setInt(3, reply.getReplyNo());
+			
+			rs = psmt.executeQuery();
+			
+			while (rs.next()) {
+				writer = rs.getString("reply_writer");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+				
+				
+				
+		
+		return writer;
 	}
 	
 	private void close() {
@@ -117,6 +165,8 @@ public class ReplyServiceImpl implements ReplyService{
 			e.printStackTrace();
 		}
 	}
+
+
 
 
 }
