@@ -1,4 +1,4 @@
-package co.proj.board;
+package co.proj.board.service;
 
 public class BoardVO {
 	private int boardNo;

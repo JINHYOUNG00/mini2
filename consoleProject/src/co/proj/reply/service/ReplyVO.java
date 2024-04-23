@@ -1,4 +1,4 @@
-package co.proj.reply;
+package co.proj.reply.service;
 
 public class ReplyVO {
 	private int replyNo;

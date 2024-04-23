@@ -1,4 +1,4 @@
-package co.proj.user;
+package co.proj.user.service;
 
 public interface UserService {
 	public boolean userInsert(UserVO user);

@@ -1,4 +1,4 @@
-package co.proj.user.impl;
+package co.proj.user.serviceImpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,8 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import co.proj.dao.DataSource;
-import co.proj.user.UserService;
-import co.proj.user.UserVO;
+import co.proj.main.Menu;
+import co.proj.user.service.UserService;
+import co.proj.user.service.UserVO;
 
 public class UserServiceImpl implements UserService{
 
@@ -52,10 +53,17 @@ public class UserServiceImpl implements UserService{
 			rs = psmt.executeQuery();
 			if (rs.next()) {
 				if (rs.getString(1).contentEquals(user.getUserPassword())) {
+					Menu.clearScreen();
+					System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 					System.out.println("로그인 성공");
+					System.out.println(user.getUserId() + " 계정에 접속했습니다.");
+					System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 					return 1;
 				} else {
+					Menu.clearScreen();
+					System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 					System.out.println("비밀번호 불일치");
+					System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 					return 0;
 				}
 			}
