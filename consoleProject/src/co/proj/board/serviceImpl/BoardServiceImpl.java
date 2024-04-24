@@ -21,7 +21,7 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public List<BoardVO> boardList() {
 		conn = dataSource.getConn();
-		String sql = "select board_no, board_title, board_writer, board_date, board_hit from boards";
+		String sql = "select board_no, board_title, board_writer, board_date, board_hit from boards order by board_no";
 		List<BoardVO> list = new ArrayList<>();
 		
 		try {

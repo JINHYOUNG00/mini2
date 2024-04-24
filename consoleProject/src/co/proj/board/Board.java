@@ -26,8 +26,7 @@ public class Board {
 		for (BoardVO board : boardList) {
 			System.out.println(board.toString());
 		}
-		Menu menu = new Menu();
-		menu.boardDetailMenu();
+		Menu.boardDetailMenu();
 	}
 	
 	// 글 작성
@@ -71,6 +70,16 @@ public class Board {
 			System.out.println(reply.toString());
 		}
 		return boardNo;
+	}
+	
+	public void showMyBoardList() {
+		System.out.println("=============== 글 목 록 ==================");
+		List<BoardVO> boardList = boardService.boardList();
+		System.out.println("글번호 \t 제목 \t ");
+		for (BoardVO board : boardList) {
+			System.out.println(board.toString());
+		}
+		Menu.boardDetailMenu();
 	}
 	
 	

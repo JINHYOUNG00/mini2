@@ -11,7 +11,6 @@ public class User {
 	UserVO user;
 	Scanner scn = new Scanner(System.in);
 	UserService userService = new UserServiceImpl();
-	Menu menu = new Menu();
 	
 	public void login() {
 		user = new UserVO();
@@ -29,7 +28,7 @@ public class User {
 		if (result == 1) {
 			UserVO.loginUserId = id;
 			
-			menu.boardMenu();
+			Menu.boardMenu();
 		}
 		
 	}
