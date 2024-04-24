@@ -127,7 +127,8 @@ public class Menu {
 			String choice = scn.nextLine();
 			switch (choice) {
 			case "1": {
-				int boardNo = boardapp.showMyBoardDetail();
+				System.out.print("조회할 글번호 >>");
+				int boardNo = boardapp.showMyBoardDetail(Integer.parseInt(scn.nextLine()));
 
 				if(boardNo != 0) {
 					MyBoardreplyMenu(boardNo);
@@ -154,7 +155,7 @@ public class Menu {
 			String choice = scn.nextLine();
 			switch (choice) {
 			case "1": {
-
+				boardapp.updateBoard(boardNo);
 				break;
 			}
 			case "2": {

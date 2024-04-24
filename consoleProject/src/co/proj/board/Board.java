@@ -58,10 +58,10 @@ public class Board {
 		}
 	}
 	
-	public void updateBoard() {
+	public void updateBoard(int boardNo) {
 		BoardVO board = new BoardVO();
-		System.out.println("수정할 글번호 >>");
-		int boardNo = Integer.parseInt(scn.nextLine());
+//		System.out.println("수정할 글번호 >>");
+//		int boardNo = Integer.parseInt(scn.nextLine());
 		board.setBoardNo(boardNo);
 		if (UserVO.loginUserId.equals(boardService.whoIsWriter(board.getBoardNo()))) {
 			boolean run = true;
@@ -70,16 +70,59 @@ public class Board {
 				String choice = scn.nextLine();
 				switch (choice) {
 				case "1": {
-					
+					System.out.print("수정할 제목 입력 >>");
+					String UpdateTitle = scn.nextLine();
+					board.setBoardTitle(UpdateTitle);
+					board.setBoardHit(1); // 얘가 1일때 제목수정하는 쿼리
+					boardService.boardUpdate(board);
+					showMyBoardDetail(boardNo);
+					break;
 				}
+				
 				case "2": {
-					
+					System.out.print("수정할 내용 입력 (~입력 시 입력 완료) >>");
+					boolean input = true;
+					String updateContent = "";
+					while (input) {
+						String updateContent2 = "";
+						updateContent2 = scn.nextLine();
+						if(!updateContent2.equals("~")) {
+							updateContent += "\n" + updateContent2;
+						} else {
+							input = false;
+						}
+					}
+					board.setBoardContent(updateContent);
+					board.setBoardHit(2); // 얘가 2일때 내용수정하는 쿼리
+					boardService.boardUpdate(board);
+					showMyBoardDetail(boardNo);
+					break;
 				}
 				case "3": {
-					
+					System.out.print("수정할 제목 입력 >>");
+					String UpdateTitle = scn.nextLine();
+					board.setBoardTitle(UpdateTitle);
+					System.out.print("수정할 내용 입력 (~입력 시 입력 완료) >>");
+					boolean input = true;
+					String updateContent = "";
+					while (input) {
+						String updateContent2 = "";
+						updateContent2 = scn.nextLine();
+						if(!updateContent2.equals("~")) {
+							updateContent += "\n" + updateContent2;
+						} else {
+							input = false;
+						}
+					}
+					board.setBoardContent(updateContent);
+					board.setBoardHit(3); // 얘가 3일때 제목 내용수정하는 쿼리
+					boardService.boardUpdate(board);
+					showMyBoardDetail(boardNo);
+					break;
 				}
 				case "4": {
 					run = false;
+					break;
 				}
 				}
 			}
@@ -116,10 +159,7 @@ public class Board {
 		Menu.myBoardDetailMenu();
 	}
 
-	public int showMyBoardDetail() {
-		System.out.print("조회할 글번호 >>");
-		int boardNo = Integer.parseInt(scn.nextLine());
-		
+	public int showMyBoardDetail(int boardNo) {
 		if (UserVO.loginUserId.equals(boardService.whoIsWriter(boardNo))) {
 			Menu.clearScreen();
 			System.out.println(boardService.showDetail(boardNo));
