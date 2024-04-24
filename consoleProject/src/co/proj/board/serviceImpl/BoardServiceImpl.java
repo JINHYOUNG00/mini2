@@ -144,7 +144,8 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public boolean boardUpdate(BoardVO board) {
-		// TODO Auto-generated method stub
+		conn = dataSource.getConn();
+		String sql = "update boards set board_title";
 		return false;
 	}
 
@@ -156,9 +157,57 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public List<BoardVO> myBoardList(String userId) {
-		// TODO Auto-generated method stub
-		return null;
+		conn = dataSource.getConn();
+		String sql = "select board_no, board_title, board_writer, board_date, board_hit from boards where board_writer = ? order by board_no";
+		List<BoardVO> list = new ArrayList<>();
+		
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, userId);
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				BoardVO board = new BoardVO();
+				board.setBoardNo(rs.getInt("board_no"));
+				board.setBoardTitle(rs.getString("board_title"));
+				board.setBoardWriter(rs.getString("board_writer"));
+				board.setBoardDate(rs.getString("board_date"));
+				board.setBoardHit(rs.getInt("board_hit"));
+				
+				list.add(board);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return list;
 	}
+	
+	@Override
+	public String whoIsWriter(int boardNo) {
+		conn = dataSource.getConn();
+		BoardVO board = new BoardVO();
+		String sql = "select board_writer from boards where board_no = ?";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, boardNo);
+			
+			rs = psmt.executeQuery();
+			while(rs.next()) {
+				board.setBoardWriter(rs.getString("board_writer"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		
+		return board.getBoardWriter();
+	}
+	
+
 	
 	private void close() {
 		try {
@@ -172,5 +221,6 @@ public class BoardServiceImpl implements BoardService{
 			e.printStackTrace();
 		}
 	}
+
 
 }

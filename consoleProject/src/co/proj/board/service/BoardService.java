@@ -22,4 +22,7 @@ public interface BoardService {
 	
 	// 내 작성글 조회
 	public List<BoardVO> myBoardList(String userId); 
+	
+	// 게시판 작성자 찾기
+	public String whoIsWriter(int boardNo);
 }

@@ -60,7 +60,7 @@ public class BoardVO {
 
 	@Override
 	public String toString() {
-		return boardNo + "\t\t" + boardTitle + "\t\t\t" + boardDate + "\t" + boardWriter + "\t" + boardHit;
+		return boardNo + "\t" + boardTitle + "\t\t\t" + boardDate + "\t" + boardWriter + "\t" + boardHit;
 	}
 	
 	public String detailInfo() {

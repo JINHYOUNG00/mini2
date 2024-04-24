@@ -8,12 +8,12 @@ import co.proj.user.User;
 import co.proj.user.service.UserVO;
 
 public class Menu {
-	
+
 	static Scanner scn = new Scanner(System.in);
 	static User userapp = new User();
 	static Board boardapp = new Board();
 	static Reply replyapp = new Reply();
-	
+
 	public static void startMenu() {
 		boolean run = true;
 		while (run) {
@@ -38,8 +38,6 @@ public class Menu {
 			} // end of switch
 		}
 	}
-	
-	
 
 	public static void boardMenu() {
 		boolean run = true;
@@ -62,7 +60,11 @@ public class Menu {
 				break;
 			}
 			case "3": {
+				clearScreen();
+				boardapp.showMyBoardList();
+				boardDetailMenu();
 
+				break;
 			}
 			case "4": {
 
@@ -70,6 +72,27 @@ public class Menu {
 			case "5": {
 				UserVO.loginUserId = null;
 				startMenu();
+			}
+			}
+		}
+	}
+
+	public static void myBoardMenu() {
+		boolean run = true;
+		while (run) {
+			System.out.println("1.상세조회 2.돌아가기");
+			System.out.print("선택 >>");
+			String choice = scn.nextLine();
+			switch (choice) {
+			case "1": {
+				int boardNo = boardapp.showBoardDetail();
+				replyMenu(boardNo);
+				break;
+			}
+			case "2": {
+				clearScreen();
+				boardMenu();
+				break;
 			}
 			}
 		}
@@ -95,7 +118,71 @@ public class Menu {
 			}
 		}
 	}
-	
+
+	public static void myBoardDetailMenu() {
+		boolean run = true;
+		while (run) {
+			System.out.println("1.상세조회 2.돌아가기");
+			System.out.print("선택 >>");
+			String choice = scn.nextLine();
+			switch (choice) {
+			case "1": {
+				int boardNo = boardapp.showMyBoardDetail();
+
+				if(boardNo != 0) {
+					MyBoardreplyMenu(boardNo);
+					break;
+				} else {
+					System.out.println("잘못된 입력입니다.");
+				}
+
+			}
+			case "2": {
+				clearScreen();
+				boardMenu();
+				break;
+			}
+			}
+		}
+	}
+
+	public static void MyBoardreplyMenu(int boardNo) {
+		boolean run = true;
+		while (run) {
+			System.out.println("1.글수정 2.글삭제 3.댓글작성 4.댓글수정 5.댓글삭제 6.돌아가기");
+			System.out.print("선택 >>");
+			String choice = scn.nextLine();
+			switch (choice) {
+			case "1": {
+
+				break;
+			}
+			case "2": {
+
+				break;
+			}
+			case "3": {
+				replyapp.insertReply(boardNo);
+				break;
+			}
+			case "4": {
+				replyapp.updateReply(boardNo);
+				break;
+			}
+			case "5": {
+				replyapp.deleteReply(boardNo);
+				break;
+			}
+			case "6": {
+				clearScreen();
+				boardapp.showMyBoardList();
+				;
+				break;
+			}
+			}
+		}
+	}
+
 	public static void replyMenu(int boardNo) {
 		boolean run = true;
 		while (run) {
@@ -111,20 +198,23 @@ public class Menu {
 				replyapp.updateReply(boardNo);
 				break;
 			}
-			
+
 			case "3": {
 				replyapp.deleteReply(boardNo);
 				break;
 			}
 			case "4": {
 				clearScreen();
-				boardapp.showBoardList();;
+				boardapp.showBoardList();
+				;
 				break;
 			}
 			}
 		}
 	}
 	
+	
+
 	public static void clearScreen() {
 		for (int i = 0; i < 80; i++)
 			System.out.println("");
