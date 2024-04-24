@@ -133,6 +133,16 @@ public class Board {
 		Menu.clearScreen();
 		
 	}
+	
+	public void deleteBoard(int boardNo) {
+		System.out.println("삭제하시겠습니까? (Y/N)");
+		String confirm = scn.nextLine();
+		if(confirm.equals("Y") || confirm.equals("y")) {
+			boardService.boardDelete(boardNo);
+		} else {
+			System.out.println("취소하였습니다.");
+		}
+	}
 
 	public int showBoardDetail() {
 		System.out.print("조회할 글번호 >>");

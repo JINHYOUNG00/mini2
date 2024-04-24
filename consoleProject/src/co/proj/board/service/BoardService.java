@@ -18,7 +18,7 @@ public interface BoardService {
 	public boolean boardUpdate(BoardVO board);
 	
 	// 게시판 글 삭제
-	public boolean boardDelete(BoardVO board);
+	public boolean boardDelete(int boardNo);
 	
 	// 내 작성글 조회
 	public List<BoardVO> myBoardList(String userId); 

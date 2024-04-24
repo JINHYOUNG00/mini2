@@ -188,8 +188,26 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public boolean boardDelete(BoardVO board) {
-		// TODO Auto-generated method stub
+	public boolean boardDelete(int boardNo) {
+		conn = dataSource.getConn();
+		String sql = "delete boards where board_no = ?";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, boardNo);
+			
+			int r = psmt.executeUpdate();
+			
+			if (r>0) {
+				return true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		
+		
 		return false;
 	}
 

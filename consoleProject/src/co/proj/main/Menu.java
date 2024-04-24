@@ -159,7 +159,7 @@ public class Menu {
 				break;
 			}
 			case "2": {
-
+				boardapp.deleteBoard(boardNo);
 				break;
 			}
 			case "3": {
