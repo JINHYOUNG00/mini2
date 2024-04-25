@@ -71,14 +71,13 @@ public class Board {
 				switch (choice) {
 				case "1": {
 					System.out.print("수정할 제목 입력 >>");
-					String UpdateTitle = scn.nextLine();
-					board.setBoardTitle(UpdateTitle);
+					String updateTitle = scn.nextLine();
+					board.setBoardTitle(updateTitle);
 					board.setBoardHit(1); // 얘가 1일때 제목수정하는 쿼리
 					boardService.boardUpdate(board);
 					showMyBoardDetail(boardNo);
 					break;
 				}
-				
 				case "2": {
 					System.out.print("수정할 내용 입력 (~입력 시 입력 완료) >>");
 					boolean input = true;

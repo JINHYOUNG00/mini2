@@ -144,34 +144,36 @@ public class BoardServiceImpl implements BoardService {
 		String sql2 = "update boards set board_content = ? where board_no = ?";
 		String sql3 = "update boards set board_title = ?, board_content = ? where board_no = ?";
 
+		int r = 0;
+		
 		try {
 			switch (board.getBoardHit()) {
 			case 1: {
 				psmt = conn.prepareStatement(sql1);
 				psmt.setString(1, board.getBoardTitle());
 				psmt.setInt(2, board.getBoardNo());
-				psmt.executeUpdate();
+				r = psmt.executeUpdate();
 				break;
 			}
 			case 2: {
 				psmt = conn.prepareStatement(sql2);
 				psmt.setString(1, board.getBoardContent());
-				System.out.println(board.getBoardContent());
+//				System.out.println(board.getBoardContent());
 				psmt.setInt(2, board.getBoardNo());
-				psmt.executeUpdate();
+				r = psmt.executeUpdate();
 				break;
 			}
 			case 3: {
 				psmt = conn.prepareStatement(sql3);
 				psmt.setString(1, board.getBoardTitle());
 				psmt.setString(2, board.getBoardContent());
-				System.out.println(board.getBoardContent());
+//				System.out.println(board.getBoardContent());
 				psmt.setInt(3, board.getBoardNo());
-				psmt.executeUpdate();
+				r = psmt.executeUpdate();
 				break;
 			}
 			}
-			int r = psmt.executeUpdate();
+//			int r = psmt.executeUpdate();
 
 			if (r > 0) {
 				return true;

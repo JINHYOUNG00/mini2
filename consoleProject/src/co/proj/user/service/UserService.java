@@ -8,6 +8,9 @@ public interface UserService {
 	public boolean userUpdate(UserVO user);
 	public int loginUser(UserVO user);
 	
+	public UserVO userInfo(String userId);
+	
 	public List<String> userIdCheck();
 	
+	public String findPassword(String userId);
 }

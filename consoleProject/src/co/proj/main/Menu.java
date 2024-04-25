@@ -68,7 +68,9 @@ public class Menu {
 				break;
 			}
 			case "4": {
-				
+				userapp.myInfo();
+				userInfoMenu();
+				break;
 			}
 			case "5": {
 				UserVO.loginUserId = null;
@@ -76,6 +78,34 @@ public class Menu {
 				System.out.println("로그아웃 되었습니다.");
 				startMenu();
 			}
+			}
+		}
+	}
+	
+	public static void userInfoMenu() {
+		boolean run = true;
+		while (run) {
+			System.out.println("1.정보 수정 2.회원 탈퇴 3.돌아가기");
+			System.out.print("선택 >>");
+			String choice = scn.nextLine();
+			switch (choice) {
+			case "1": {
+				userapp.updateUser();
+				break;
+			}
+			case "2": {
+				
+				break;
+			}
+			case "3": {
+				clearScreen();
+				boardMenu();
+				break;
+			}
+			default : {
+				System.out.println("잘못된 입력");
+			}
+
 			}
 		}
 	}

@@ -74,6 +74,32 @@ public class UserServiceImpl implements UserService{
 	
 	
 	
+	@Override
+	public UserVO userInfo(String userId) {
+		conn = dataSource.getConn();
+		String sql = "select user_id, user_name, user_email, user_tel from users where user_id = ?";
+		UserVO user = new UserVO();
+		
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, userId);
+			
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				user.setUserId(rs.getString("user_id"));
+				user.setUserName(rs.getString("user_name"));
+				user.setUserEmail(rs.getString("user_email"));
+				user.setUserTel(rs.getString("user_tel"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return user;
+	}
+	
+	
 	
 	@Override
 	public int loginUser(UserVO user) {
@@ -112,16 +138,80 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public boolean userDelete(String userId) {
-		dataSource.getConn();
+		conn = dataSource.getConn();
+//		String sql = "update users set "
 		
 		
 		return false;
 	}
+	@Override
+	public String findPassword(String userId) {
+		conn = dataSource.getConn();
+		String sql = "select user_password from users where user_id = ?";
+		UserVO user = new UserVO();
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, userId);
+			
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				user.setUserPassword(rs.getString("user_password"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return user.getUserPassword();
+	}
 
 	@Override
 	public boolean userUpdate(UserVO user) {
-		dataSource.getConn();
-		
+		conn = dataSource.getConn();
+		String sql1 = "update users set user_password = ? where user_id = ?";
+		String sql2 = "update users set user_email = ? where user_id  = ?";
+		String sql3 = "update users set user_tel  = ? where user_id  = ?";
+		int r = 0;
+		try {
+			switch(user.getUserName()){
+			case "1" : {
+				psmt = conn.prepareStatement(sql1);
+				psmt.setString(1, user.getUserPassword());
+				psmt.setString(2, user.getUserId());
+				
+				r = psmt.executeUpdate();
+				break;
+			}
+			case "2" : {
+				psmt = conn.prepareStatement(sql2);
+				psmt.setString(1, user.getUserEmail());
+				psmt.setString(2, user.getUserId());
+				
+				r = psmt.executeUpdate();
+				break;
+			}
+			case "3" : {
+				psmt = conn.prepareStatement(sql3);
+				psmt.setString(1, user.getUserTel());
+				psmt.setString(2, user.getUserId());
+				
+				r = psmt.executeUpdate();
+				break;
+			}
+			}
+			
+			if (r > 0) {
+				return true;
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close();
+		}
 		
 		return false;
 	}
@@ -139,5 +229,7 @@ public class UserServiceImpl implements UserService{
 			e.printStackTrace();
 		}
 	}
+
+
 	
 }
