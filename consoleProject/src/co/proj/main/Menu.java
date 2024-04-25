@@ -78,6 +78,9 @@ public class Menu {
 				System.out.println("로그아웃 되었습니다.");
 				startMenu();
 			}
+			default : {
+				System.out.println("잘못된 입력");
+			}
 			}
 		}
 	}
@@ -94,7 +97,7 @@ public class Menu {
 				break;
 			}
 			case "2": {
-				
+				userapp.leaveUser();
 				break;
 			}
 			case "3": {
@@ -127,6 +130,9 @@ public class Menu {
 				boardMenu();
 				break;
 			}
+			default : {
+				System.out.println("잘못된 입력");
+			}
 			}
 		}
 	}
@@ -147,6 +153,9 @@ public class Menu {
 				clearScreen();
 				boardMenu();
 				break;
+			}
+			default : {
+				System.out.println("잘못된 입력");
 			}
 			}
 		}
@@ -175,6 +184,9 @@ public class Menu {
 				clearScreen();
 				boardMenu();
 				break;
+			}
+			default : {
+				System.out.println("잘못된 입력");
 			}
 			}
 		}
@@ -213,6 +225,9 @@ public class Menu {
 				;
 				break;
 			}
+			default : {
+				System.out.println("잘못된 입력");
+			}
 			}
 		}
 	}
@@ -240,8 +255,10 @@ public class Menu {
 			case "4": {
 				clearScreen();
 				boardapp.showBoardList();
-				;
 				break;
+			}
+			default : {
+				System.out.println("잘못된 입력");
 			}
 			}
 		}

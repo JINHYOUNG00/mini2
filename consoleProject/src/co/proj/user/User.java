@@ -95,6 +95,21 @@ public class User {
 			System.out.println("예외 발생 가입실패");
 		}
 	}
+	
+	public void leaveUser() {
+		System.out.println("======================== 회 원 탈 퇴 ========================");
+		System.out.println("탈퇴하시겠습니까? (Y/N)");
+		String confirm = scn.nextLine();
+		if (confirm.equals("Y") || confirm.equals("y")) {
+			userService.userDelete(UserVO.loginUserId);
+			UserVO.loginUserId = "";
+			System.out.println("탈퇴되었습니다.");
+			Menu.startMenu();
+		} else {
+			System.out.println("취소하였습니다.");
+		}
+	}
+	
 
 	public void myInfo() {
 		System.out.println("======================== 내 정보 ========================");
@@ -110,25 +125,26 @@ public class User {
 		boolean run = true;
 		while (run) {
 			System.out.println("1.비밀번호 수정 2.email 수정 3.연락처 수정 4.돌아가기");
+			System.out.print("선택 >>");
 			String choice = scn.nextLine();
 			switch (choice) {
 			case "1": {
 				boolean a = true;
 				while (a) {
-					System.out.println("현재 비밀번호 입력 >>");
+					System.out.print("현재 비밀번호 입력 >>");
 					String currentPassword = scn.nextLine();
 //					System.out.println(UserVO.loginUserId);
 //					System.out.println(userService.findPassword(UserVO.loginUserId));
-					if(currentPassword.equals(userService.findPassword(UserVO.loginUserId))) {
+					if (currentPassword.equals(userService.findPassword(UserVO.loginUserId))) {
 						System.out.print("수정할 비밀번호 입력 >>");
 						String updatePassword = scn.nextLine();
 						user.setUserPassword(updatePassword);
 						user.setUserName("1"); // dao에서 email을 수정하는걸 알려주기위함
 						userService.userUpdate(user);
-						System.out.println("비밀번호가 변경되었습니다.");
-						a = false;
 						Menu.clearScreen();
+						a = false;
 						myInfo();
+						System.out.println("비밀번호가 변경되었습니다.");
 					} else {
 						if (currentPassword.equals("~")) {
 							a = false;
@@ -138,29 +154,45 @@ public class User {
 						System.out.println("비밀번호가 틀렸습니다.(~ 입력시 돌아가기)");
 					}
 				}
-				
+
 				break;
 			}
 			case "2": {
-				System.out.print("수정할 email 입력 >>");
-				String updateEmail = scn.nextLine();
-				user.setUserEmail(updateEmail);
-				user.setUserName("2"); // dao에서 email을 수정하는걸 알려주기위함
-				userService.userUpdate(user);
-				Menu.clearScreen();
-				myInfo();
-				System.out.println("email 정보가 변경되었습니다.");
+				boolean a = true;
+				while (a) {
+					System.out.print("수정할 email 입력 >>");
+					String updateEmail = scn.nextLine();
+					if (Pattern.matches("^[_a-zA-Z0-9-\\.]+@[_a-zA-Z0-9-\\.]+\\.[_a-zA-Z0-9-\\.]+$$", updateEmail)) {
+						user.setUserEmail(updateEmail);
+						user.setUserName("2"); // dao에서 email을 수정하는걸 알려주기위함
+						userService.userUpdate(user);
+						Menu.clearScreen();
+						myInfo();
+						System.out.println("email 정보가 변경되었습니다.");
+						a = false;
+					} else {
+						System.out.println("유효하지 않은 이메일입니다. 다시 입력해주세요.");
+					}
+				}
 				break;
 			}
 			case "3": {
-				System.out.println("수정할 연락처 입력 >>");
-				String updateTel = scn.nextLine();
-				user.setUserTel(updateTel);
-				user.setUserName("3");
-				userService.userUpdate(user);
-				Menu.clearScreen();
-				myInfo();
-				System.out.println("연락처 정보가 변경되었습니다.");
+				boolean a = true;
+				while (a) {
+					System.out.print("수정할 휴대전화 연락처 입력(-없이 입력) >>");
+					String updateTel = scn.nextLine();
+					if (Pattern.matches("^01(?:0|1|[6-9])(?:\\d{3}|\\d{4})\\d{4}$", updateTel)) {
+						user.setUserTel(updateTel);
+						user.setUserName("3");
+						userService.userUpdate(user);
+						Menu.clearScreen();
+						myInfo();
+						System.out.println("연락처 정보가 변경되었습니다.");
+						a = false;
+					} else {
+						System.out.println("유효하지 않은 전화번호입니다. 다시 입력해주세요.");
+					}
+				}
 				break;
 			}
 			case "4": {
@@ -168,6 +200,10 @@ public class User {
 				myInfo();
 				Menu.userInfoMenu();
 				break;
+			}
+			
+			default : {
+				System.out.println("잘못된 입력입니다.");
 			}
 			}
 		}

@@ -139,7 +139,18 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public boolean userDelete(String userId) {
 		conn = dataSource.getConn();
-//		String sql = "update users set "
+		String sql = "delete users where user_id = ?";
+		
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, userId);
+			
+			psmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 		return false;
@@ -204,15 +215,11 @@ public class UserServiceImpl implements UserService{
 			if (r > 0) {
 				return true;
 			}
-			
-			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			close();
 		}
-		
 		return false;
 	}
 
