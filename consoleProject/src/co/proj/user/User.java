@@ -16,13 +16,16 @@ public class User {
 	public void login() {
 		user = new UserVO();
 		Menu.clearScreen();
-		System.out.println("======================== 로 그 인 ========================");
+		System.out.println("                                   로 그 인              ");
+		System.out.println("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 		System.out.print("아이디 >>");
 		String id = scn.nextLine();
 		user.setUserId(id);
+		System.out.println("----------------------------------------------------------------------------");
 		System.out.print("비밀번호 >>");
 		String password = scn.nextLine();
 		user.setUserPassword(password);
+		System.out.println("----------------------------------------------------------------------------");
 
 		// 로그인 메서드()
 		int result = userService.loginUser(user);
@@ -35,30 +38,52 @@ public class User {
 	}
 
 	public void signUpUser() {
-		System.out.println("======================== 회 원 가 입 ========================");
+		Menu.clearScreen();
+		System.out.println("                                회 원 가 입                             ");
+		System.out.println("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 		user = new UserVO();
 		boolean a = true;
 		while (a) {
-			System.out.print("아이디 >>");
+			System.out.print("아이디(영문자로 시작하는 영문자 또는 숫자 6~20자) >>");
 			String id = scn.nextLine();
 			if (userService.userIdCheck().contains(id)) {
-				System.out.println("이미 가입된 아이디입니다. 다시 입력해주세요.");
-			} else {
-				user.setUserId(id);
-				a = false;
+				Menu.clearScreen();
+				System.out.println();
+				System.out.println("### 이미 가입된 아이디입니다. 다시 입력해주세요. ###");
+				System.out.println();
+			} else if(!(Pattern.matches("^[a-z]+[a-z0-9]{5,19}$", id))) {
+				Menu.clearScreen();
+					System.out.println();
+					System.out.println("### 아이디 형식에 맞게 다시 입력해주세요. ###");
+					System.out.println();
+				} else {
+					
+					user.setUserId(id);
+					a = false;					
+				}
 			}
-		}
+		
 		a = true;
 		while (a) {
-			System.out.print("비밀번호 >>");
+			System.out.print("비밀번호(8~16자 영문, 숫자 조합) >>");
 			String password = scn.nextLine();
-			System.out.print("비밀번호 확인 >>");
-			String passwordCheck = scn.nextLine();
-			if (password.equals(passwordCheck)) {
-				user.setUserPassword(password);
-				a = false;
+			if(Pattern.matches("^(?=.*\\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}$",password)) {
+				System.out.print("비밀번호 확인 >>");
+				String passwordCheck = scn.nextLine();
+				if (password.equals(passwordCheck)) {
+					user.setUserPassword(password);
+					a = false;
+				} else {
+					Menu.clearScreen();
+					System.out.println();
+					System.out.println("### 비밀번호 불일치. 다시 입력해주세요. ###");
+					System.out.println();
+				}
 			} else {
-				System.out.println("비밀번호 불일치. 다시 입력해주세요.");
+				Menu.clearScreen();
+				System.out.println();
+				System.out.println("### 비밀번호 형식에 맞게 다시 입력해주세요. ###");
+				System.out.println();
 			}
 		}
 		a = true;
@@ -69,7 +94,10 @@ public class User {
 				user.setUserEmail(email);
 				a = false;
 			} else {
-				System.out.println("유효하지 않은 이메일입니다. 다시 입력해주세요.");
+				Menu.clearScreen();
+				System.out.println();
+				System.out.println("### 유효하지 않은 이메일입니다. 다시 입력해주세요. ###");
+				System.out.println();
 			}
 		}
 		System.out.print("이름 >>");
@@ -83,39 +111,49 @@ public class User {
 				user.setUserTel(tel);
 				a = false;
 			} else {
-				System.out.println("유효하지 않은 전화번호입니다. 다시 입력해주세요.");
+				Menu.clearScreen();
+				System.out.println();
+				System.out.println("### 유효하지 않은 전화번호입니다. 다시 입력해주세요. ###");
+				System.out.println();
 			}
 		}
 
 		// 회원가입 메서드()
 		if (userService.userInsert(user)) {
 			Menu.clearScreen();
-			System.out.println("가입 완료");
+			System.out.println();
+			System.out.println("### 가입 완료 ###");
+			System.out.println();
 		} else {
-			System.out.println("예외 발생 가입실패");
+			System.out.println("");
+			System.out.println("### 예외 발생 가입실패 ###");
+			System.out.println();
 		}
 	}
 	
 	public void leaveUser() {
-		System.out.println("======================== 회 원 탈 퇴 ========================");
-		System.out.println("탈퇴하시겠습니까? (Y/N)");
+		System.out.println("                                회 원 탈 퇴                             ");
+		System.out.println("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+		System.out.println("정말 탈퇴하시겠습니까? (Y/N)");
 		String confirm = scn.nextLine();
 		if (confirm.equals("Y") || confirm.equals("y")) {
 			userService.userDelete(UserVO.loginUserId);
 			UserVO.loginUserId = "";
-			System.out.println("탈퇴되었습니다.");
+			System.out.println("### 탈퇴되었습니다. ###");
 			Menu.startMenu();
 		} else {
-			System.out.println("취소하였습니다.");
+			System.out.println("### 취소하였습니다. ###");
 		}
 	}
 	
 
 	public void myInfo() {
-		System.out.println("======================== 내 정보 ========================");
+		Menu.clearScreen();
+		System.out.println("                                내 정보                             ");
+		System.out.println("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 		System.out.println(userService.userInfo(UserVO.loginUserId).toString());
 		;
-		System.out.println("=======================================================");
+		System.out.println("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 	}
 
 	public void updateUser() {
@@ -144,14 +182,14 @@ public class User {
 						Menu.clearScreen();
 						a = false;
 						myInfo();
-						System.out.println("비밀번호가 변경되었습니다.");
+						System.out.println("### 비밀번호가 변경되었습니다. ###");
 					} else {
 						if (currentPassword.equals("~")) {
 							a = false;
 							Menu.clearScreen();
 							myInfo();
 						}
-						System.out.println("비밀번호가 틀렸습니다.(~ 입력시 돌아가기)");
+						System.out.println("### 비밀번호가 틀렸습니다.(~ 입력시 돌아가기) ###");
 					}
 				}
 
@@ -168,10 +206,12 @@ public class User {
 						userService.userUpdate(user);
 						Menu.clearScreen();
 						myInfo();
-						System.out.println("email 정보가 변경되었습니다.");
+						System.out.println("### email 정보가 변경되었습니다. ###");
 						a = false;
 					} else {
-						System.out.println("유효하지 않은 이메일입니다. 다시 입력해주세요.");
+						System.out.println();
+						System.out.println("### 유효하지 않은 이메일입니다. 다시 입력해주세요. ###");
+						System.out.println();
 					}
 				}
 				break;
@@ -187,10 +227,10 @@ public class User {
 						userService.userUpdate(user);
 						Menu.clearScreen();
 						myInfo();
-						System.out.println("연락처 정보가 변경되었습니다.");
+						System.out.println("### 연락처 정보가 변경되었습니다. ###");
 						a = false;
 					} else {
-						System.out.println("유효하지 않은 전화번호입니다. 다시 입력해주세요.");
+						System.out.println("### 유효하지 않은 전화번호입니다. 다시 입력해주세요. ###");
 					}
 				}
 				break;

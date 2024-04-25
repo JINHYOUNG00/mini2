@@ -47,6 +47,56 @@ public class BoardServiceImpl implements BoardService {
 
 		return list;
 	}
+	
+	@Override
+	public List<BoardVO> searchBoardList(String str, String choice) {
+		conn = dataSource.getConn();
+		String sql1 = "select board_no, board_title, board_writer, board_date, board_hit "
+				+ " from boards"
+				+ " where board_title like ?"
+				+ " order by board_no";
+		
+		String sql2 = "select board_no, board_title, board_writer, board_date, board_hit "
+				+ " from boards"
+				+ " where board_writer = ?"
+				+ " order by board_no";
+		
+		List<BoardVO> list = new ArrayList<>();
+
+		try {
+			switch (choice) {
+			case "2":{
+				psmt = conn.prepareStatement(sql1);
+				psmt.setString(1, "%"+str+"%");
+				rs = psmt.executeQuery();
+			}
+			case "3":{
+				psmt = conn.prepareStatement(sql2);
+				psmt.setString(1, str);
+				rs = psmt.executeQuery();
+			}
+			}
+			
+
+			while (rs.next()) {
+				BoardVO board = new BoardVO();
+				board.setBoardNo(rs.getInt("board_no"));
+				board.setBoardTitle(rs.getString("board_title"));
+				board.setBoardWriter(rs.getString("board_writer"));
+				board.setBoardDate(rs.getString("board_date"));
+				board.setBoardHit(rs.getInt("board_hit"));
+
+				list.add(board);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+
+		return list;
+	}
 
 	@Override
 	public String showDetail(int boardNo) {

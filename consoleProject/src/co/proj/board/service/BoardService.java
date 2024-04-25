@@ -25,4 +25,7 @@ public interface BoardService {
 	
 	// 게시판 작성자 찾기
 	public String whoIsWriter(int boardNo);
+	
+	// 게시글 검색
+	public List<BoardVO> searchBoardList(String str, String choice);
 }

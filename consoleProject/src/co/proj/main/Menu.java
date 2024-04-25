@@ -17,7 +17,12 @@ public class Menu {
 	public static void startMenu() {
 		boolean run = true;
 		while (run) {
-			System.out.println("1.로그인 2.회원가입 3.나가기");
+			System.out.println("                                 Home Menu               ");
+			System.out.println("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+			System.out.println("■                                                                          ■");
+			System.out.println("■                     1.로그인   2.회원가입   3.나가기                     ■");
+			System.out.println("■                                                                          ■");
+			System.out.println("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 			System.out.print("선택 >>");
 			String choice = scn.nextLine();
 			switch (choice) {
@@ -44,7 +49,12 @@ public class Menu {
 	public static void boardMenu() {
 		boolean run = true;
 		while (run) {
-			System.out.println("1.글 목록 2.글 작성 3.나의 작성 글 4.내 정보 5.로그아웃");
+			System.out.println("                                 Board Menu               ");
+			System.out.println("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+			System.out.println("■                                                                          ■");
+			System.out.println("■     1.글 목록   2.글 작성   3.나의 작성 글   4.내 정보   5.로그아웃      ■");
+			System.out.println("■                                                                          ■");
+			System.out.println("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 			System.out.print("선택 >>");
 			String choice = scn.nextLine();
 			switch (choice) {
@@ -75,7 +85,7 @@ public class Menu {
 			case "5": {
 				UserVO.loginUserId = null;
 				Menu.clearScreen();
-				System.out.println("로그아웃 되었습니다.");
+				System.out.println("### 로그아웃 되었습니다. ###");
 				startMenu();
 			}
 			default : {
@@ -140,7 +150,7 @@ public class Menu {
 	public static void boardDetailMenu() {
 		boolean run = true;
 		while (run) {
-			System.out.println("1.상세조회 2.돌아가기");
+			System.out.println("1.상세조회 2.제목 검색 3.작성자 검색 4.돌아가기");
 			System.out.print("선택 >>");
 			String choice = scn.nextLine();
 			switch (choice) {
@@ -150,6 +160,14 @@ public class Menu {
 				break;
 			}
 			case "2": {
+				boardapp.showSearchBoardList(choice);
+				break;
+			}
+			case "3": {
+				boardapp.showSearchBoardList(choice);
+				break;
+			}
+			case "4": {
 				clearScreen();
 				boardMenu();
 				break;

@@ -20,18 +20,36 @@ public class Board {
 
 	// 글 목록
 	public void showBoardList() {
-		System.out.println("=============== 글 목 록 ==================");
+		System.out.println("                                         글 목록");
+		System.out.println("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 		List<BoardVO> boardList = boardService.boardList();
 		System.out.println("글번호 \t\t 제목 \t\t\t\t 날짜 \t\t 글쓴이 \t조회수 ");
+		System.out.println("-------------------------------------------------------------------------------------------");
 		for (BoardVO board : boardList) {
 			System.out.println(board.toString());
 		}
 		Menu.boardDetailMenu();
 	}
 
+	// 글 검색 목록
+	public void showSearchBoardList(String choice) {
+		System.out.print("검색 키워드 입력 >> ");
+		String str = scn.nextLine();
+		System.out.println("                                         글 목록");
+		System.out.println("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+		List<BoardVO> boardList = boardService.searchBoardList(str, choice);
+		System.out.println("글번호 \t\t 제목 \t\t\t\t 날짜 \t\t 글쓴이 \t조회수 ");
+		System.out.println("-------------------------------------------------------------------------------------------");
+		for (BoardVO board : boardList) {
+			System.out.println(board.toString());
+		}
+		Menu.boardDetailMenu();
+	}
+	
 	// 글 작성
 	public void showBoardInsert() {
-		System.out.println("=============== 글 작 성 ==================");
+		System.out.println(
+				"■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 글 작 성 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");System.out.println("=============== 글 작 성 ==================");
 		BoardVO board = new BoardVO();
 		System.out.print("제목 >>");
 		String title = scn.nextLine();
@@ -155,7 +173,7 @@ public class Board {
 		System.out.println(boardService.showDetail(boardNo));
 		List<ReplyVO> replyList = replyService.replyList(boardNo);
 		System.out.println(
-				"================================================================ 댓 글 ================================================================");
+				"■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 댓 글 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 		for (ReplyVO reply : replyList) {
 			System.out.println(reply.toString());
 		}
@@ -163,9 +181,11 @@ public class Board {
 	}
 
 	public void showMyBoardList() {
-		System.out.println("=============== 글 목 록 ==================");
+		System.out.println("                                         글 목록");
+		System.out.println("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 		List<BoardVO> boardList = boardService.myBoardList(UserVO.loginUserId);
 		System.out.println("글번호 \t\t 제목 \t\t\t\t 날짜 \t\t 글쓴이 \t조회수 ");
+		System.out.println("-------------------------------------------------------------------------------------------");
 		for (BoardVO board : boardList) {
 			System.out.println(board.toString());
 		}
@@ -178,7 +198,7 @@ public class Board {
 			System.out.println(boardService.showDetail(boardNo));
 			List<ReplyVO> replyList = replyService.replyList(boardNo);
 			System.out.println(
-					"================================================================ 댓 글 ================================================================");
+					"■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 댓 글 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 			for (ReplyVO reply : replyList) {
 				System.out.println(reply.toString());
 			}

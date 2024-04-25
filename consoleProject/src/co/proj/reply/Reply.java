@@ -17,7 +17,8 @@ public class Reply {
 	ReplyService replyService = new ReplyServiceImpl();
 	
 	public void insertReply(int boardNo) {
-		System.out.println("=============== 리 플 작 성 ==================");
+		System.out.println(
+	"■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 댓 글 작 성 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 		ReplyVO reply = new ReplyVO();
 		System.out.print("댓글 내용 입력 >>");
 		String replyContent = scn.nextLine();
@@ -29,7 +30,8 @@ public class Reply {
 		
 		System.out.println(boardService.showDetail2(boardNo));
 		List<ReplyVO> replyList = replyService.replyList(boardNo);
-		System.out.println("================================================================ 댓 글 ================================================================");
+		System.out.println(
+				"■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 댓 글 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 		for (ReplyVO reply2 : replyList) {
 			System.out.println(reply2.toString());
 		}
@@ -37,7 +39,8 @@ public class Reply {
 	}
 	
 	public void updateReply(int boardNo) {
-		System.out.println("=============== 리 플 수 정 ==================");
+		System.out.println(
+				"■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 댓 글 수 정 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 		ReplyVO reply = new ReplyVO();
 		System.out.print("수정할 리플번호 입력 >>");
 		reply.setReplyNo(Integer.parseInt(scn.nextLine()));
@@ -50,7 +53,8 @@ public class Reply {
 			replyService.replyUpdate(reply);
 			System.out.println(boardService.showDetail2(boardNo));
 			List<ReplyVO> replyList = replyService.replyList(boardNo);
-			System.out.println("================================================================ 댓 글 ================================================================");
+			System.out.println(
+					"■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 댓 글 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 			for (ReplyVO reply2 : replyList) {
 				System.out.println(reply2.toString());
 			}
@@ -60,7 +64,8 @@ public class Reply {
 			Menu.clearScreen();
 			System.out.println(boardService.showDetail2(boardNo));
 			List<ReplyVO> replyList = replyService.replyList(boardNo);
-			System.out.println("================================================================ 댓 글 ================================================================");
+			System.out.println(
+					"■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 댓 글 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 			for (ReplyVO reply2 : replyList) {
 				System.out.println(reply2.toString());
 			}
@@ -70,7 +75,8 @@ public class Reply {
 	}
 	
 	public void deleteReply(int boardNo) {
-		System.out.println("=============== 리 플 삭 제 ==================");
+		System.out.println(
+				"■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 댓 글 삭 제 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 		ReplyVO reply = new ReplyVO();
 		System.out.println("삭제할 리플번호 입력 >>");
 		reply.setBoardNo(boardNo);
@@ -81,7 +87,8 @@ public class Reply {
 			replyService.replyDelete(reply);
 			System.out.println(boardService.showDetail2(boardNo));
 			List<ReplyVO> replyList = replyService.replyList(boardNo);
-			System.out.println("================================================================ 댓 글 ================================================================");
+			System.out.println(
+					"■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 댓 글 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 			for (ReplyVO reply2 : replyList) {
 				System.out.println(reply2.toString());
 			}
@@ -91,7 +98,8 @@ public class Reply {
 			Menu.clearScreen();
 			System.out.println(boardService.showDetail2(boardNo));
 			List<ReplyVO> replyList = replyService.replyList(boardNo);
-			System.out.println("================================================================ 댓 글 ================================================================");
+			System.out.println(
+					"■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 댓 글 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 			for (ReplyVO reply2 : replyList) {
 				System.out.println(reply2.toString());
 			}
