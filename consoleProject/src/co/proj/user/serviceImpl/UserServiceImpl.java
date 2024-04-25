@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import co.proj.dao.DataSource;
 import co.proj.main.Menu;
@@ -35,6 +37,7 @@ public class UserServiceImpl implements UserService{
 			if (r>0) {
 				return true;
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -42,6 +45,35 @@ public class UserServiceImpl implements UserService{
 		}
 		return false;
 	}
+	
+	@Override
+	public List<String> userIdCheck() {
+		conn = dataSource.getConn();
+		UserVO user = new UserVO();
+		String sql2 = "select user_id from users";
+		List<String> list = new ArrayList<>();
+		
+		try {
+			psmt = conn.prepareStatement(sql2);
+			rs = psmt.executeQuery();
+			
+			while (rs.next()) {
+				user.setUserId(rs.getString("user_id"));
+				
+				list.add(user.getUserId());
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		
+		return list;
+	}
+	
+	
+	
 	
 	@Override
 	public int loginUser(UserVO user) {
@@ -81,14 +113,16 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public boolean userDelete(String userId) {
 		dataSource.getConn();
-		// TODO Auto-generated method stub
+		
+		
 		return false;
 	}
 
 	@Override
 	public boolean userUpdate(UserVO user) {
 		dataSource.getConn();
-		// TODO Auto-generated method stub
+		
+		
 		return false;
 	}
 
@@ -105,4 +139,5 @@ public class UserServiceImpl implements UserService{
 			e.printStackTrace();
 		}
 	}
+	
 }

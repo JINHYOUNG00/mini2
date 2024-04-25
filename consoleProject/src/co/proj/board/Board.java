@@ -130,7 +130,7 @@ public class Board {
 			System.out.println("잘못된 입력입니다.");
 		}
 		
-		Menu.clearScreen();
+//		Menu.clearScreen();
 		
 	}
 	
@@ -139,8 +139,12 @@ public class Board {
 		String confirm = scn.nextLine();
 		if(confirm.equals("Y") || confirm.equals("y")) {
 			boardService.boardDelete(boardNo);
+			showMyBoardList();
+			System.out.println("삭제 되었습니다.");
 		} else {
-			System.out.println("취소하였습니다.");
+			showMyBoardDetail(boardNo);
+			System.out.println("취소 하였습니다.");
+			
 		}
 	}
 

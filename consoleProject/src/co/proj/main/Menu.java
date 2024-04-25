@@ -19,21 +19,23 @@ public class Menu {
 		while (run) {
 			System.out.println("1.로그인 2.회원가입 3.나가기");
 			System.out.print("선택 >>");
-			int choice = Integer.parseInt(scn.nextLine());
+			String choice = scn.nextLine();
 			switch (choice) {
-			case 1: {
+			case "1": {
 				userapp.login();
 				break;
 			}
-			case 2: {
+			case "2": {
 				userapp.signUpUser();
 				break;
 			}
-			case 3: {
+			case "3": {
 				System.out.println("프로그램 종료");
 				run = false;
 				System.exit(0);
 				break;
+			} default: {
+				System.out.println("잘못된 입력");
 			}
 			} // end of switch
 		}
@@ -43,7 +45,6 @@ public class Menu {
 		boolean run = true;
 		while (run) {
 			System.out.println("1.글 목록 2.글 작성 3.나의 작성 글 4.내 정보 5.로그아웃");
-			System.out.println(UserVO.loginUserId);
 			System.out.print("선택 >>");
 			String choice = scn.nextLine();
 			switch (choice) {
@@ -67,10 +68,12 @@ public class Menu {
 				break;
 			}
 			case "4": {
-
+				
 			}
 			case "5": {
 				UserVO.loginUserId = null;
+				Menu.clearScreen();
+				System.out.println("로그아웃 되었습니다.");
 				startMenu();
 			}
 			}
