@@ -49,7 +49,7 @@ public class Board {
 	// 글 작성
 	public void showBoardInsert() {
 		System.out.println(
-				"■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 글 작 성 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");System.out.println("=============== 글 작 성 ==================");
+				"■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■ 글 작 성 ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 		BoardVO board = new BoardVO();
 		System.out.print("제목 >>");
 		String title = scn.nextLine();

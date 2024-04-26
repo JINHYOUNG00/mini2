@@ -47,20 +47,33 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
-	public List<String> userIdCheck() {
+	public List<String> userIdCheck(int num) {
 		conn = dataSource.getConn();
 		UserVO user = new UserVO();
-		String sql2 = "select user_id from users";
+		String sql1 = "select user_id from users";
+		String sql2 = "select user_tel from users";
 		List<String> list = new ArrayList<>();
 		
 		try {
-			psmt = conn.prepareStatement(sql2);
-			rs = psmt.executeQuery();
-			
-			while (rs.next()) {
-				user.setUserId(rs.getString("user_id"));
+			switch (num) {
+			case 1: {
+				psmt = conn.prepareStatement(sql1);
+				rs = psmt.executeQuery();
 				
-				list.add(user.getUserId());
+				while (rs.next()) {
+					user.setUserId(rs.getString("user_id"));
+					list.add(user.getUserId());
+				}
+			}
+			case 2: {
+				psmt = conn.prepareStatement(sql2);
+				rs = psmt.executeQuery();
+				
+				while (rs.next()) {
+					user.setUserTel(rs.getString("user_tel"));
+					list.add(user.getUserTel());
+				}
+			}
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -156,26 +169,51 @@ public class UserServiceImpl implements UserService{
 		
 		return false;
 	}
+	
+	
 	@Override
-	public String findPassword(String userId) {
+	public String findInfo(UserVO user, int num) {
 		conn = dataSource.getConn();
-		String sql = "select user_password from users where user_id = ?";
-		UserVO user = new UserVO();
+		String sql1 = "select user_password from users where user_id = ? and user_tel = ?";
+		String sql2 = "select user_id from users where user_tel = ?";
+		
+		// 비밀번호 찾기 시 임시비밀번호로 변경하도록
+//		String sql3 = "update users set user_password = ? where user_id = ? user_tel = ?";
+//		UserVO user = new UserVO();
 		try {
-			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, userId);
 			
-			rs = psmt.executeQuery();
-			
-			if(rs.next()) {
-				user.setUserPassword(rs.getString("user_password"));
+			switch (num) {
+			case 1: {
+				psmt = conn.prepareStatement(sql1);
+				psmt.setString(1, user.getUserId());
+				psmt.setString(2, user.getUserTel());
+				
+				rs = psmt.executeQuery();
+				
+				if(rs.next()) {
+					user.setUserPassword(rs.getString("user_password"));
+				}
+				return user.getUserPassword();
 			}
+			case 2: {
+				psmt = conn.prepareStatement(sql2);
+				psmt.setString(1, user.getUserTel());
+				
+				rs = psmt.executeQuery();
+				
+				if(rs.next()) {
+					user.setUserId(rs.getString("user_id"));
+				}
+				return user.getUserId();
+			}
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close();
 		}
-		return user.getUserPassword();
+		return " ";
 	}
 
 	@Override
@@ -237,6 +275,7 @@ public class UserServiceImpl implements UserService{
 			e.printStackTrace();
 		}
 	}
+
 
 
 	

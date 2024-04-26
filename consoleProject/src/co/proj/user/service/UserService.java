@@ -10,7 +10,8 @@ public interface UserService {
 	
 	public UserVO userInfo(String userId);
 	
-	public List<String> userIdCheck();
+	public List<String> userIdCheck(int num);
 	
-	public String findPassword(String userId);
+	public String findInfo(UserVO user, int num);
+	
 }

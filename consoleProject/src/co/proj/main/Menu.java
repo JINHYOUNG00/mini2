@@ -20,7 +20,7 @@ public class Menu {
 			System.out.println("                                 Home Menu               ");
 			System.out.println("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 			System.out.println("■                                                                          ■");
-			System.out.println("■                     1.로그인   2.회원가입   3.나가기                     ■");
+			System.out.println("■           1.로그인   2.회원가입   3.ID찾기   4.비밀번호찾기    5.나가기              ■");
 			System.out.println("■                                                                          ■");
 			System.out.println("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 			System.out.print("선택 >>");
@@ -35,6 +35,14 @@ public class Menu {
 				break;
 			}
 			case "3": {
+				userapp.findUserId();
+				break;
+			}
+			case "4": {
+				userapp.findUserPassword();
+				break;
+			}
+			case "5": {
 				System.out.println("프로그램 종료");
 				run = false;
 				System.exit(0);
@@ -52,7 +60,7 @@ public class Menu {
 			System.out.println("                                 Board Menu               ");
 			System.out.println("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 			System.out.println("■                                                                          ■");
-			System.out.println("■     1.글 목록   2.글 작성   3.나의 작성 글   4.내 정보   5.로그아웃      ■");
+			System.out.println("■     1.글 목록   2.글 작성   3.나의 작성 글   4.내 정보   5.로그아웃                  ■");
 			System.out.println("■                                                                          ■");
 			System.out.println("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
 			System.out.print("선택 >>");

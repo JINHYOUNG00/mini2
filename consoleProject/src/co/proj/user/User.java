@@ -36,6 +36,46 @@ public class User {
 		}
 
 	}
+	
+	public void findUserId() {
+		Menu.clearScreen();
+		UserVO user = new UserVO();
+		System.out.println("                                   ID 찾기          ");
+		System.out.println("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+		System.out.print("계정이 등록된 전화번호 >>");
+		String tel = scn.nextLine();
+		user.setUserTel(tel);
+		String findId = userService.findInfo(user, 2); // 아이디가 넘어옴
+		if(findId == null) {
+			System.out.println("해당 번호로 등록된 아이디가 없습니다.");
+		} else {
+			System.out.println("해당 번호가 등록된 아이디는 " + findId + " 입니다");
+		}
+		
+	}
+	
+	public void findUserPassword() {
+		Menu.clearScreen();
+		UserVO user = new UserVO();
+		System.out.println("                                 비밀번호 찾기          ");
+		System.out.println("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+		System.out.print("비밀번호 찾을 계정Id >>");
+		String id = scn.nextLine();
+		user.setUserId(id);
+		System.out.print("전화번호 >>");
+		String tel = scn.nextLine();
+		user.setUserTel(tel);
+//		String exPassword = (Math.floor(Math.random()*89999999)+10000000) + "";
+//		user.setUserPassword(exPassword);
+		String findPassword = userService.findInfo(user, 1); // 비밀번호가 넘어옴
+		if(findPassword == null) {
+			System.out.println("해당 아이디, 전화번호가 일치하는 비밀번호가 없습니다.");
+		} else {
+			System.out.println("해당 아이디의 비밀번호는 " + findPassword + " 입니다");			
+		}
+		
+//		System.out.println("해당 아이디에 임시 비밀번호는 " + exPassword + " 입니다. 로그인 후 바로 변경하세요.");
+	}
 
 	public void signUpUser() {
 		Menu.clearScreen();
@@ -46,28 +86,28 @@ public class User {
 		while (a) {
 			System.out.print("아이디(영문자로 시작하는 영문자 또는 숫자 6~20자) >>");
 			String id = scn.nextLine();
-			if (userService.userIdCheck().contains(id)) {
+			if (userService.userIdCheck(1).contains(id)) {
 				Menu.clearScreen();
 				System.out.println();
 				System.out.println("### 이미 가입된 아이디입니다. 다시 입력해주세요. ###");
 				System.out.println();
-			} else if(!(Pattern.matches("^[a-z]+[a-z0-9]{5,19}$", id))) {
+			} else if (!(Pattern.matches("^[a-z]+[a-z0-9]{5,19}$", id))) {
 				Menu.clearScreen();
-					System.out.println();
-					System.out.println("### 아이디 형식에 맞게 다시 입력해주세요. ###");
-					System.out.println();
-				} else {
-					
-					user.setUserId(id);
-					a = false;					
-				}
+				System.out.println();
+				System.out.println("### 아이디 형식에 맞게 다시 입력해주세요. ###");
+				System.out.println();
+			} else {
+
+				user.setUserId(id);
+				a = false;
 			}
-		
+		}
+
 		a = true;
 		while (a) {
 			System.out.print("비밀번호(8~16자 영문, 숫자 조합) >>");
 			String password = scn.nextLine();
-			if(Pattern.matches("^(?=.*\\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}$",password)) {
+			if (Pattern.matches("^(?=.*\\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}$", password)) {
 				System.out.print("비밀번호 확인 >>");
 				String passwordCheck = scn.nextLine();
 				if (password.equals(passwordCheck)) {
@@ -107,7 +147,12 @@ public class User {
 		while (a) {
 			System.out.print("휴대전화 연락처(-없이 입력) >>");
 			String tel = scn.nextLine();
-			if (Pattern.matches("^01(?:0|1|[6-9])(?:\\d{3}|\\d{4})\\d{4}$", tel)) {
+			if (userService.userIdCheck(2).contains(tel)) {
+				Menu.clearScreen();
+				System.out.println();
+				System.out.println("### 이미 가입된 계정이 있는 전화번호입니다. 다시 입력해주세요. ###");
+				System.out.println();
+			} else if (Pattern.matches("^01(?:0|1|[6-9])(?:\\d{3}|\\d{4})\\d{4}$", tel)) {
 				user.setUserTel(tel);
 				a = false;
 			} else {
@@ -130,7 +175,7 @@ public class User {
 			System.out.println();
 		}
 	}
-	
+
 	public void leaveUser() {
 		System.out.println("                                회 원 탈 퇴                             ");
 		System.out.println("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
@@ -145,7 +190,6 @@ public class User {
 			System.out.println("### 취소하였습니다. ###");
 		}
 	}
-	
 
 	public void myInfo() {
 		Menu.clearScreen();
@@ -173,7 +217,9 @@ public class User {
 					String currentPassword = scn.nextLine();
 //					System.out.println(UserVO.loginUserId);
 //					System.out.println(userService.findPassword(UserVO.loginUserId));
-					if (currentPassword.equals(userService.findPassword(UserVO.loginUserId))) {
+					UserVO user2 = new UserVO();
+					user2.setUserId(UserVO.loginUserId);
+					if (currentPassword.equals(userService.findInfo(user2,1))) {
 						System.out.print("수정할 비밀번호 입력 >>");
 						String updatePassword = scn.nextLine();
 						user.setUserPassword(updatePassword);
@@ -241,8 +287,8 @@ public class User {
 				Menu.userInfoMenu();
 				break;
 			}
-			
-			default : {
+
+			default: {
 				System.out.println("잘못된 입력입니다.");
 			}
 			}
